@@ -4,11 +4,10 @@ services:
     runtime: python
     plan: free
     buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
-    # createsuperuser --noinput reads the three DJANGO_SUPERUSER_* vars below.
-    # "|| true" means: if the superuser already exists (so it errors on repeat
-    # deploys), just ignore that and carry on starting the app.
     startCommand: "python manage.py migrate && (python manage.py createsuperuser --noinput || true) && gunicorn midexsite.wsgi:application"
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.10"
       - key: DJANGO_SECRET_KEY
         generateValue: true
       - key: DJANGO_DEBUG
@@ -16,10 +15,10 @@ services:
       - key: DJANGO_ALLOWED_HOSTS
         value: ".onrender.com"
       - key: DATABASE_URL
-        sync: false  # paste your Supabase Session pooler connection string here
+        sync: false
       - key: DJANGO_SUPERUSER_USERNAME
-        sync: false  # set your own admin username here
+        sync: false
       - key: DJANGO_SUPERUSER_EMAIL
-        sync: false  # set your own admin email here
+        sync: false
       - key: DJANGO_SUPERUSER_PASSWORD
-        sync: false  # set your own admin password here
+        sync: false
