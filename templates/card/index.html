@@ -1,0 +1,289 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ card.company_name }} {{ card.tagline }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'card/style.css' %}" />
+    <link rel="icon" href="{% static 'card/assets/favicon.ico' %}" sizes="any" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'card/assets/favicon-32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'card/assets/favicon-16.png' %}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'card/assets/apple-touch-icon.png' %}"
+    />
+  </head>
+  <body>
+    <main class="card" id="card">
+      <!-- Header -->
+      <header class="card__header">
+        <img
+          class="card__logo"
+          src="{% if card.logo %}{{ card.logo.url }}{% else %}{% static 'card/assets/logo.png' %}{% endif %}"
+          alt="{{ card.company_name }} logo"
+        />
+        <span class="card__rc">{{ card.rc_number }}</span>
+      </header>
+
+      <div class="card__wordmark">
+        <h1>{{ card.company_name }}</h1>
+        <p>{{ card.tagline }}</p>
+      </div>
+
+      <!-- Measuring-tape divider (signature element) -->
+      <div class="ruler" role="presentation" aria-hidden="true">
+        <svg viewBox="0 0 400 16" preserveAspectRatio="none">
+          <line x1="0" y1="8" x2="400" y2="8" class="ruler__line" />
+          <g class="ruler__ticks"></g>
+        </svg>
+      </div>
+
+      <!-- Person -->
+      <section class="card__person">
+        <h2>{{ card.person_name }}</h2>
+        <p class="credentials">{{ card.credentials }}</p>
+        <p class="title">{{ card.job_title }}</p>
+      </section>
+
+      <!-- Contact details -->
+      <section class="card__contact">
+        <a class="contact-row" href="tel:{{ card.phone_e164 }}">
+          <span class="icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"
+              />
+            </svg>
+          </span>
+          <span class="contact-text">
+            <span class="label">Call</span>
+            <span class="value">{{ card.phone_display }}</span>
+          </span>
+        </a>
+
+        <a
+          class="contact-row"
+          href="https://wa.me/{{ card.phone_digits }}"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.72.45 3.39 1.3 4.87L2.05 22l5.35-1.4a9.9 9.9 0 0 0 4.64 1.18h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.15c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.98s.73-2.11 1-2.4c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.35 1.46.29.15.46.13.63-.08.17-.21.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.93.28.14.47.21.53.33.07.12.07.68-.17 1.36z"
+              />
+            </svg>
+          </span>
+          <span class="contact-text">
+            <span class="label">WhatsApp</span>
+            <span class="value">{{ card.phone_display }}</span>
+          </span>
+        </a>
+
+        <a class="contact-row" href="mailto:{{ card.email_primary }}">
+          <span class="icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 4h16v16H4z" opacity="0" />
+              <path d="M4 6h16v12H4z" />
+              <path d="m4 7 8 6 8-6" />
+            </svg>
+          </span>
+          <span class="contact-text">
+            <span class="label">Email</span>
+            <span class="value">{{ card.email_primary }}</span>
+          </span>
+        </a>
+
+        {% if card.email_secondary %}
+        <a class="contact-row" href="mailto:{{ card.email_secondary }}">
+          <span class="icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 6h16v12H4z" />
+              <path d="m4 7 8 6 8-6" />
+            </svg>
+          </span>
+          <span class="contact-text">
+            <span class="label">Email</span>
+            <span class="value">{{ card.email_secondary }}</span>
+          </span>
+        </a>
+        {% endif %}
+
+        <a
+          class="contact-row contact-row--address"
+          href="https://maps.google.com/?q={{ card.address|urlencode }}"
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+          </span>
+          <span class="contact-text">
+            <span class="label">Address</span>
+            <span class="value">{{ card.address }}</span>
+          </span>
+        </a>
+      </section>
+
+      <!-- Ruler again above footer -->
+      <div class="ruler" role="presentation" aria-hidden="true">
+        <svg viewBox="0 0 400 16" preserveAspectRatio="none">
+          <line x1="0" y1="8" x2="400" y2="8" class="ruler__line" />
+          <g class="ruler__ticks"></g>
+        </svg>
+      </div>
+
+      <button
+        class="save-btn save-btn--secondary"
+        id="downloadCard"
+        type="button"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="9" cy="9" r="2" />
+          <path d="m21 15-5-5L5 21" />
+        </svg>
+        <span id="downloadCardLabel">Download Card (PDF)</span>
+      </button>
+    </main>
+
+    <!-- Hidden print template — rendered off-screen, captured to an image, then
+     embedded in a real 3.5in x 2in PDF. Kept in sync with the visible card.
+     No QR code here by design — it's for the live page only. -->
+    <div id="printCard" class="print-card" aria-hidden="true">
+      <div class="print-card__left">
+        <img
+          src="{% if card.logo %}{{ card.logo.url }}{% else %}{% static 'card/assets/logo.png' %}{% endif %}"
+          alt=""
+          class="print-card__logo"
+        />
+        <span class="print-card__rc">{{ card.rc_number }}</span>
+      </div>
+      <div class="print-card__right">
+        <div class="print-card__brand">
+          <h2 class="print-card__midex">{{ card.company_name }}</h2>
+          <p class="print-card__tagline">{{ card.tagline }}</p>
+        </div>
+        <div class="print-card__divider"></div>
+        <div class="print-card__person">
+          <h3 class="print-card__name">{{ card.person_name }}</h3>
+          <p class="print-card__credentials">{{ card.credentials }}</p>
+          <p class="print-card__title">{{ card.job_title }}</p>
+        </div>
+        <div class="print-card__divider"></div>
+        <div class="print-card__details">
+          <p class="print-card__row print-card__row--strong">
+            <span class="print-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.72.45 3.39 1.3 4.87L2.05 22l5.35-1.4a9.9 9.9 0 0 0 4.64 1.18h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.15c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.64-.6-2.88-1.24-4.76-4.14-4.9-4.33-.14-.19-1.17-1.56-1.17-2.98s.73-2.11 1-2.4c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.15.07.15.12.32.02.51-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.35 1.46.29.15.46.13.63-.08.17-.21.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.93.28.14.47.21.53.33.07.12.07.68-.17 1.36z"
+                />
+              </svg>
+            </span>
+            <span class="print-card__line print-card__line--strong">
+              {{ card.phone_display }}
+              <span class="print-card__muted">(Call / WhatsApp)</span>
+            </span>
+          </p>
+          <p class="print-card__row">
+            <span class="print-card__icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 6h16v12H4z" />
+                <path d="m4 7 8 6 8-6" />
+              </svg>
+            </span>
+            <span class="print-card__line">
+              {{ card.email_primary }}{% if card.email_secondary %} &nbsp;·&nbsp; {{ card.email_secondary }}{% endif %}
+            </span>
+          </p>
+          <p class="print-card__row print-card__row--address">
+            <span class="print-card__icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </span>
+            <span class="print-card__line print-card__address">
+              {{ card.address }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {{ pdf_filename|json_script:"pdf-filename" }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="{% static 'card/scripts.js' %}"></script>
+  </body>
+</html>

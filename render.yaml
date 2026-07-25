@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: midex-card
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
+    # createsuperuser --noinput reads the three DJANGO_SUPERUSER_* vars below.
+    # "|| true" means: if the superuser already exists (so it errors on repeat
+    # deploys), just ignore that and carry on starting the app.
+    startCommand: "python manage.py migrate && (python manage.py createsuperuser --noinput || true) && gunicorn midexsite.wsgi:application"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DATABASE_URL
+        sync: false  # paste your Supabase Session pooler connection string here
+      - key: DJANGO_SUPERUSER_USERNAME
+        sync: false  # set your own admin username here
+      - key: DJANGO_SUPERUSER_EMAIL
+        sync: false  # set your own admin email here
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false  # set your own admin password here

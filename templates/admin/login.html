@@ -1,0 +1,13 @@
+{% extends "admin/login.html" %}
+{% load static %}
+
+{% block content %}
+<div style="text-align:center; margin-bottom: 24px;">
+  <img
+    src="{% static 'card/assets/logo.png' %}"
+    alt="MIDEX"
+    style="height:64px; width:auto;"
+  />
+</div>
+{{ block.super }}
+{% endblock %}

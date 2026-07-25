@@ -1,0 +1,489 @@
+/* ===== Tokens ===== */
+:root {
+  --ink-navy: #1b2340;
+  --ink-navy-deep: #131a30;
+  --signal-red: #d42e2e;
+  --parchment: #f6f3ec;
+  --graphite: #26282e;
+  --brass: #b8935b;
+  --mist: #a9b0c4;
+  --hairline: rgba(255, 255, 255, 0.14);
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Public Sans", -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: #0e1224;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--graphite);
+  display: flex;
+  justify-content: center;
+  padding: clamp(20px, 6vw, 48px) max(16px, env(safe-area-inset-left))
+    calc(40px + env(safe-area-inset-bottom));
+}
+
+/* ===== Card shell ===== */
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--ink-navy);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+/* subtle blueprint grid texture on navy */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+/* ===== Header ===== */
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(18px, 5vw, 26px) clamp(18px, 5.5vw, 26px) 0;
+  position: relative;
+}
+
+.card__logo {
+  width: clamp(42px, 12vw, 52px);
+  height: clamp(42px, 12vw, 52px);
+  object-fit: contain;
+}
+
+.card__rc {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--mist);
+  border: 1px solid var(--hairline);
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ===== Wordmark ===== */
+.card__wordmark {
+  padding: 14px clamp(18px, 5.5vw, 26px) 0;
+  position: relative;
+}
+
+.card__wordmark h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(32px, 9vw, 40px);
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.card__wordmark p {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(11.5px, 3.2vw, 13px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin-top: 6px;
+}
+
+/* ===== Ruler / measuring-tape divider (signature element) ===== */
+.ruler {
+  padding: 18px clamp(18px, 5.5vw, 26px);
+  position: relative;
+}
+
+.ruler svg {
+  width: 100%;
+  height: 16px;
+  display: block;
+}
+
+.ruler__line {
+  stroke: var(--hairline);
+  stroke-width: 1;
+}
+
+/* ===== Person ===== */
+.card__person {
+  padding: 0 clamp(18px, 5.5vw, 26px) 20px;
+  position: relative;
+}
+
+.card__person h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 5.5vw, 24px);
+  color: #ffffff;
+  line-height: 1.15;
+}
+
+.credentials {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--brass);
+  margin-top: 6px;
+}
+
+.title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--signal-red);
+  margin-top: 8px;
+}
+
+/* ===== Contact block ===== */
+.card__contact {
+  background: var(--parchment);
+  border-radius: 16px 16px 0 0;
+  padding: 8px 8px 4px;
+  position: relative;
+}
+
+.contact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 13px 14px;
+  min-height: 44px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 10px;
+  transition: background 0.15s ease;
+}
+
+.contact-row:hover,
+.contact-row:focus-visible {
+  background: rgba(27, 35, 64, 0.06);
+  outline: none;
+}
+
+.contact-row:focus-visible {
+  box-shadow: 0 0 0 2px var(--signal-red);
+}
+
+.icon {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  color: var(--ink-navy);
+  margin-top: 2px;
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.contact-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8b8f9c;
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--graphite);
+  word-break: break-word;
+}
+
+.contact-row--address .value {
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+/* ===== Save contact button ===== */
+.save-btn {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  background: var(--signal-red);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(13px, 3.6vw, 14px);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.save-btn svg {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+}
+
+.save-btn:hover {
+  background: #b62525;
+}
+.save-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -4px;
+}
+
+.save-btn--secondary {
+  background: transparent;
+  color: var(--parchment);
+  border: 1.5px solid var(--parchment);
+  margin-top: 2px;
+}
+
+.save-btn--secondary:hover {
+  background: rgba(246, 243, 236, 0.12);
+}
+.save-btn--secondary:focus-visible {
+  outline: 2px solid var(--parchment);
+  outline-offset: -4px;
+}
+
+.save-btn--secondary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.card > .save-btn:last-child {
+  border-radius: 0 0 20px 20px;
+}
+
+.save-hint {
+  background: var(--parchment);
+  color: #8b8f9c;
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+  padding: 10px 20px 18px;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* ===== Print card (hidden, captured for the PDF export) ===== */
+/* Fixed pixel dimensions: 1050 x 600 = a 3.5in x 2in card at 300dpi. */
+.print-card {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 1050px;
+  height: 600px;
+  display: flex;
+  font-family: var(--font-body);
+  background: var(--ink-navy);
+}
+
+.print-card__left {
+  width: 300px;
+  flex: 0 0 auto;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 64px;
+  gap: 20px;
+}
+
+.print-card__logo {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.print-card__rc {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--ink-navy);
+  border: 1px solid rgba(27, 35, 64, 0.25);
+  padding: 6px 12px;
+  border-radius: 5px;
+}
+
+.print-card__right {
+  flex: 1;
+  padding: 48px 52px;
+  display: flex;
+  flex-direction: column;
+}
+
+.print-card__midex {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 76px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--signal-red);
+}
+
+.print-card__tagline {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin-top: 8px;
+}
+
+.print-card__divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  margin: 22px 0;
+}
+
+.print-card__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 40px;
+  color: #ffffff;
+}
+
+.print-card__credentials {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: var(--brass);
+  margin-top: 8px;
+}
+
+.print-card__title {
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--signal-red);
+  margin-top: 10px;
+}
+
+.print-card__line {
+  font-family: var(--font-mono);
+  font-size: 19px;
+  color: #ffffff;
+}
+
+.print-card__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.print-card__row--address {
+  align-items: flex-start;
+}
+
+.print-card__icon {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  color: var(--brass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.print-card__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.print-card__row--address .print-card__icon {
+  margin-top: 2px;
+}
+
+.print-card__line--strong {
+  font-weight: 500;
+}
+
+.print-card__muted {
+  font-family: var(--font-body);
+  color: var(--mist);
+  font-size: 15px;
+}
+
+.print-card__address {
+  font-family: var(--font-body);
+  color: var(--mist);
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+/* ===== Responsive ===== */
+
+/* Very small phones (older iPhone SE, etc.) */
+@media (max-width: 340px) {
+  .card__rc {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+  .value {
+    font-size: 13px;
+  }
+}
+
+/* Tablets and up: give the card a little more breathing room */
+@media (min-width: 640px) {
+  .card {
+    max-width: 440px;
+  }
+  body {
+    padding-top: 64px;
+  }
+}
+
+/* Landscape phones: avoid the card feeling cramped top-to-bottom */
+@media (max-height: 480px) and (orientation: landscape) {
+  body {
+    align-items: flex-start;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
