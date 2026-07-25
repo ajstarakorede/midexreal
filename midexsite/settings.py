@@ -129,4 +129,27 @@ STORAGES = {
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Django only prints full error tracebacks to console when DEBUG=True by
+# default. In production DEBUG must stay False (showing tracebacks to
+# visitors is a security risk), but that also silently hides the traceback
+# from YOUR OWN logs too, unless we explicitly configure logging like this —
+# so a 500 error is actually diagnosable from Render's Logs tab instead of
+# just showing a bare "500" with no explanation.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+}
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
